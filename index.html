@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050b1a">
+  <meta name="description"
+    content="Register for HealthFest 5.0, JCI Nigeria UNIBEN's annual health project: screening, consultation and health education for students and the wider community.">
+  <title>HealthFest 5.0 Registration — JCI Nigeria UNIBEN</title>
+  <link rel="icon" href="images/jcin-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!--
+ IMAGES: make an "images" folder next to this file and add:
+   images/jci-nigeria-uniben-logo.png   transparent-background JCI logo (header)
+   images/healthfest-hero.jpg           main HealthFest photo, landscape, 1600px+ wide
+   images/healthfest-moment.jpg         photo on the thank-you screen
+ Different file names? Edit the --img-* variables below (logo: the <img> in the header).
+-->
+  <style>
+    :root {
+      /* ===== IMAGE SLOTS ===== */
+      --img-hero: url('images/healthfest-hero.jpg');
+      --img-thanks: url('images/healthfest-moment.jpg');
+      /* ======================= */
+      --bg: #050b1a;
+      --field: #0f1f40;
+      --line: rgba(120, 170, 255, .18);
+      --cyan: #22d3ee;
+      --blue: #2f6bff;
+      --text: #eaf2ff;
+      --muted: #90a4c6;
+      --err: #ff8296;
+      --head: 'Sora', system-ui, sans-serif;
+      --body: 'Plus Jakarta Sans', system-ui, sans-serif
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font: 16px/1.6 var(--body);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+      background: radial-gradient(900px 500px at 8% -5%, rgba(47, 107, 255, .28), transparent 60%), radial-gradient(700px 500px at 100% 40%, rgba(34, 211, 238, .1), transparent 60%), var(--bg)
+    }
+
+    h1,
+    h2 {
+      font-family: var(--head);
+      line-height: 1.1;
+      letter-spacing: -.02em
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 18px
+    }
+
+    .top {
+      height: 66px;
+      display: flex;
+      align-items: center
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font: 800 1rem var(--head)
+    }
+
+    .brand img {
+      height: 40px;
+      width: auto
+    }
+
+    .label {
+      font: 700 .72rem var(--body);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--cyan)
+    }
+
+    .layout {
+      display: grid;
+      gap: 22px;
+      padding-top: 8px;
+      padding-bottom: 44px
+    }
+
+    @media(min-width:960px) {
+      .layout {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: 32px;
+        align-items: start
+      }
+
+      .side {
+        position: sticky;
+        top: 20px
+      }
+    }
+
+    .hero {
+      border-radius: 28px;
+      padding: 26px 22px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 10px;
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 60px -24px #000;
+      background-color: #08142c;
+      background-image: linear-gradient(180deg, rgba(5, 11, 26, .15), rgba(5, 11, 26, .92)), var(--img-hero), radial-gradient(120% 90% at 0% 0%, #1d4ed8, #08142c 65%);
+      background-size: cover;
+      background-position: center
+    }
+
+    @media(min-width:960px) {
+      .hero {
+        min-height: 380px;
+        padding: 32px
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 10vw, 3.7rem);
+      font-weight: 800
+    }
+
+    .hero p:last-child {
+      color: #c6d4ee;
+      max-width: 38ch
+    }
+
+    .when {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px
+    }
+
+    .evt {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(15, 31, 64, .5);
+      transition: border-color .2s, box-shadow .2s
+    }
+
+    .evt.on {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, .12)
+    }
+
+    .evt b {
+      display: block;
+      font-family: var(--head)
+    }
+
+    .evt span {
+      display: block;
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    #locCard .evt {
+      margin-top: 12px;
+      border-color: var(--cyan)
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px 18px;
+      background: linear-gradient(180deg, rgba(15, 31, 64, .78), rgba(9, 19, 41, .92));
+      box-shadow: 0 30px 70px -30px #000
+    }
+
+    @media(min-width:640px) {
+      .card {
+        padding: 38px
+      }
+    }
+
+    .card h2 {
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      font-weight: 800;
+      margin: 8px 0
+    }
+
+    .sub {
+      color: var(--muted)
+    }
+
+    fieldset {
+      border: 0;
+      padding: 0;
+      margin-top: 32px;
+      min-width: 0
+    }
+
+    legend {
+      font: 700 1.08rem var(--head);
+      width: 100%;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .cols {
+      display: grid;
+      gap: 16px
+    }
+
+    @media(min-width:640px) {
+      .cols {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .full {
+        grid-column: 1/-1
+      }
+    }
+
+    .fld {
+      display: grid;
+      gap: 7px;
+      align-content: start
+    }
+
+    .sp {
+      margin-top: 18px
+    }
+
+    .lbl {
+      font-weight: 600;
+      font-size: .92rem
+    }
+
+    .lbl:after {
+      content: " *";
+      color: var(--cyan)
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=tel],
+    select {
+      width: 100%;
+      font: inherit;
+      color: var(--text);
+      background: var(--field);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 14px;
+      transition: border-color .2s, box-shadow .2s
+    }
+
+    input::placeholder {
+      color: #5f7399
+    }
+
+    input:focus,
+    select:focus {
+      outline: 0;
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(34, 211, 238, .15)
+    }
+
+    select {
+      appearance: none;
+      padding-right: 38px;
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2322d3ee' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+    }
+
+    select option {
+      background: #0f1f40
+    }
+
+    .bad input,
+    .bad select {
+      border-color: var(--err)
+    }
+
+    .err {
+      color: var(--err);
+      font-size: .85rem
+    }
+
+    .err:empty {
+      display: none
+    }
+
+    .seg {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .seg label {
+      position: relative
+    }
+
+    .seg input {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      cursor: pointer
+    }
+
+    .seg span {
+      display: block;
+      padding: 11px 22px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--field);
+      font-weight: 600;
+      transition: .2s
+    }
+
+    .seg input:checked+span {
+      border-color: var(--cyan);
+      background: rgba(34, 211, 238, .14);
+      box-shadow: 0 0 18px -4px rgba(34, 211, 238, .55)
+    }
+
+    .seg input:focus-visible+span {
+      outline: 2px solid var(--cyan);
+      outline-offset: 2px
+    }
+
+    .tools {
+      display: flex;
+      gap: 18px;
+      margin: 6px 0 14px
+    }
+
+    .lnk {
+      background: none;
+      border: 0;
+      color: var(--cyan);
+      font: 600 .9rem var(--body);
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px
+    }
+
+    @media(min-width:560px) {
+      .grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .svc,
+    .chk {
+      position: relative;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer
+    }
+
+    .svc {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--field);
+      transition: border-color .2s, background .2s, box-shadow .2s, transform .15s
+    }
+
+    .svc:active {
+      transform: scale(.985)
+    }
+
+    .svc:has(input:checked) {
+      border-color: var(--cyan);
+      background: rgba(34, 211, 238, .1);
+      box-shadow: 0 0 22px -8px rgba(34, 211, 238, .65)
+    }
+
+    .svc input,
+    .chk input {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer
+    }
+
+    .chk {
+      align-items: flex-start;
+      margin-top: 12px
+    }
+
+    .chk input {
+      width: 22px;
+      height: 22px
+    }
+
+    .tick {
+      flex: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 1.5px solid #4a6091;
+      display: grid;
+      place-items: center;
+      transition: .2s
+    }
+
+    .tick:after {
+      content: "";
+      width: 10px;
+      height: 5px;
+      border: solid #04101f;
+      border-width: 0 0 2.5px 2.5px;
+      margin-top: -2px;
+      transform: rotate(-45deg) scale(0);
+      transition: transform .2s cubic-bezier(.3, 1.7, .5, 1)
+    }
+
+    input:checked+.tick {
+      background: var(--cyan);
+      border-color: var(--cyan)
+    }
+
+    input:checked+.tick:after {
+      transform: rotate(-45deg) scale(1)
+    }
+
+    input:focus-visible+.tick {
+      outline: 2px solid #fff;
+      outline-offset: 2px
+    }
+
+    .svc>span,
+    .chk>span {
+      font-size: .93rem;
+      line-height: 1.4
+    }
+
+    .conf {
+      display: inline-block;
+      margin-left: 8px;
+      font: 700 .64rem var(--body);
+      font-style: normal;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(34, 211, 238, .4);
+      border-radius: 99px;
+      padding: 2px 8px;
+      vertical-align: middle
+    }
+
+    .note {
+      font-size: .85rem;
+      color: var(--muted);
+      border-left: 3px solid var(--blue);
+      padding: 3px 0 3px 12px;
+      margin-top: 14px
+    }
+
+    .warn {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255, 190, 80, .08);
+      border: 1px solid rgba(255, 190, 80, .35);
+      font-size: .92rem
+    }
+
+    .foot {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 12px
+    }
+
+    .meter {
+      height: 6px;
+      border-radius: 9px;
+      background: var(--field);
+      overflow: hidden
+    }
+
+    .meter i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      transition: width .35s
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px 14px;
+      flex-wrap: wrap;
+      font-size: .88rem;
+      color: var(--muted)
+    }
+
+    .go {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      padding: 16px;
+      font: 800 1.02rem var(--head);
+      color: #04101f;
+      text-decoration: none;
+      cursor: pointer;
+      background: linear-gradient(90deg, var(--cyan), #5aa2ff);
+      box-shadow: 0 14px 34px -12px rgba(34, 211, 238, .75);
+      transition: transform .15s, filter .2s
+    }
+
+    .go:hover:not(:disabled) {
+      transform: translateY(-2px);
+      filter: brightness(1.07)
+    }
+
+    .go:active:not(:disabled) {
+      transform: scale(.98)
+    }
+
+    .go:disabled {
+      background: #16264a;
+      color: #6f84ad;
+      box-shadow: none;
+      cursor: not-allowed
+    }
+
+    .go.alt {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      box-shadow: none
+    }
+
+    .go.wa {
+      background: #25d366;
+      box-shadow: 0 14px 34px -14px #25d366
+    }
+
+    .spin {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(4, 16, 31, .3);
+      border-top-color: #04101f;
+      border-radius: 50%;
+      animation: sp .7s linear infinite
+    }
+
+    @keyframes sp {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255, 130, 150, .1);
+      border: 1px solid rgba(255, 130, 150, .4);
+      color: #ffd0d8;
+      font-size: .92rem
+    }
+
+    .done {
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+      text-align: center
+    }
+
+    .done .sub {
+      max-width: 44ch
+    }
+
+    .thanks {
+      width: 100%;
+      height: 180px;
+      border-radius: 20px;
+      background-color: #08142c;
+      background-image: linear-gradient(180deg, transparent, rgba(5, 11, 26, .7)), var(--img-thanks), radial-gradient(120% 120% at 50% 0%, #1d4ed8, #08142c 70%);
+      background-size: cover;
+      background-position: center
+    }
+
+    .sum {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 4px 16px;
+      background: var(--field)
+    }
+
+    .sum div {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .sum div:last-child {
+      border: 0
+    }
+
+    .sum dt {
+      color: var(--muted)
+    }
+
+    .sum dd {
+      text-align: right;
+      font-weight: 600
+    }
+
+    .btns {
+      display: grid;
+      gap: 10px;
+      width: 100%
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 0;
+      color: var(--muted);
+      font-size: .88rem
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 24px;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    footer a {
+      color: var(--text)
+    }
+
+    .soc {
+      display: flex;
+      gap: 10px
+    }
+
+    .soc a {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transition: .2s
+    }
+
+    .soc a:hover {
+      border-color: var(--cyan);
+      color: var(--cyan)
+    }
+
+    .soc svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .rv {
+      animation: rv .6s ease both
+    }
+
+    .card.rv {
+      animation-delay: .1s
+    }
+
+    @keyframes rv {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="wrap top"><a class="brand" href="#"><img src="images/jcin-logo.png" alt="JCI Nigeria UNIBEN"
+        onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>JCI Nigeria UNIBEN</span></a>
+  </header>
+  <main class="wrap layout">
+    <aside class="side rv">
+      <div class="hero">
+        <p class="label">Organised by JCI Nigeria UNIBEN</p>
+        <h1>HealthFest 5.0</h1>
+        <p>Healthcare should never be a luxury. Accessible screening, consultation and health education for students and
+          the wider community.</p>
+      </div>
+      <div class="when" id="when"></div>
+    </aside>
+    <section class="card rv" id="card">
+      <p class="label">HealthFest 5.0 Registration</p>
+      <h2>Register Your Interest</h2>
+      <p class="sub">Fill in your details below and let us know which services you would like to access.</p>
+      <noscript>
+        <p class="alert">Please turn on JavaScript to register.</p>
+      </noscript>
+      <form id="f" novalidate>
+        <fieldset>
+          <legend>Your details</legend>
+          <div class="cols">
+            <label class="fld full"><span class="lbl">Full Name</span><input type="text" name="fullname"
+                autocomplete="name" placeholder="First and last name"><small class="err"
+                data-for="fullname"></small></label>
+            <label class="fld"><span class="lbl">Age</span><input type="text" name="age" inputmode="numeric"
+                maxlength="3" placeholder="e.g. 21"><small class="err" data-for="age"></small></label>
+            <label class="fld"><span class="lbl">Gender</span><select name="gender">
+                <option value="" disabled selected>Select gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Prefer not to say</option>
+              </select><small class="err" data-for="gender"></small></label>
+            <label class="fld"><span class="lbl">Phone Number (WhatsApp preferably)</span><input type="tel" name="phone"
+                autocomplete="tel" placeholder="08012345678"><small class="err" data-for="phone"></small></label>
+            <label class="fld"><span class="lbl">Email Address</span><input type="email" name="email"
+                autocomplete="email" placeholder="you@example.com"><small class="err" data-for="email"></small></label>
+          </div>
+          <div class="warn" id="minor" hidden><b>You're under 18.</b> A parent or guardian must consent to your taking
+            part.<label class="chk"><input type="checkbox" name="guardian"><i class="tick"></i><span>My parent or
+                guardian has consented to my participation.</span></label><small class="err"
+              data-for="guardian"></small></div>
+        </fieldset>
+        <fieldset>
+          <legend>Your HealthFest visit</legend>
+          <div class="fld" role="radiogroup" aria-labelledby="l1"><span class="lbl" id="l1">Which HealthFest location
+              will you be attending?</span>
+            <div class="seg"><label><input type="radio" name="location"
+                  value="Ugbowo"><span>Ugbowo</span></label><label><input type="radio" name="location"
+                  value="Ekenhuan"><span>Ekenhuan</span></label></div><small class="err" data-for="location"></small>
+          </div>
+          <div id="locCard" hidden></div>
+          <div class="fld sp" role="radiogroup" aria-labelledby="l2"><span class="lbl" id="l2">Have you participated in
+              any previous HealthFest before?</span>
+            <div class="seg"><label><input type="radio" name="attended"
+                  value="Yes"><span>Yes</span></label><label><input type="radio" name="attended"
+                  value="No"><span>No</span></label></div><small class="err" data-for="attended"></small>
+          </div>
+          <label class="fld sp"><span class="lbl">How did you hear about this event?</span><select name="heard"
+              id="heard"></select><small class="err" data-for="heard"></small></label>
+        </fieldset>
+        <fieldset>
+          <legend>What service(s) would you like to access at HealthFest 5.0?</legend>
+          <p class="sub">Select all the services you would like to access.</p>
+          <div class="tools"><button type="button" class="lnk" data-all="1">Select all</button><button type="button"
+              class="lnk" data-all="0">Clear</button></div>
+          <div class="grid" id="svc"></div><small class="err" data-for="services"></small>
+          <p class="note">Services marked Confidential, including HIV testing and mental health support, are handled
+            privately.</p>
+        </fieldset>
+        <fieldset>
+          <legend>Consent and privacy</legend>
+          <label class="chk"><input type="checkbox" name="consent"><i class="tick"></i><span>I agree to my information
+              being used for HealthFest planning and service delivery.</span></label><small class="err"
+            data-for="consent"></small>
+          <p class="note">Health information is sensitive personal data under the Nigeria Data Protection Act (NDPA)
+            2023. We collect only what we need, keep it secure and use it only for HealthFest 5.0.</p>
+        </fieldset>
+        <div class="foot">
+          <div class="meter"><i id="bar"></i></div>
+          <div class="stat"><span id="hint" aria-live="polite"></span><span id="count"></span></div>
+          <div class="alert" id="ferr" role="alert" hidden></div><button class="go" id="go" type="submit"
+            disabled>Submit Registration</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap"><span>© 2026 JCIN UNIBEN. All rights reserved. &nbsp;<a
+          href="mailto:jcinuniben@gmail.com">jcinuniben@gmail.com</a></span>
+      <div class="soc" id="soc"></div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script>
+    // ===== CONFIG: fill in everything marked [FILL IN] =====
+    const CONFIG = {
+      SUPABASE_URL: 'https://eroogvrsmlfpcdmnvxsf.supabase.co',           // [FILL IN] e.g. https://abcd1234.supabase.co
+      SUPABASE_ANON_KEY: 'sb_publishable_EwKWVrQlbM7EzmKVdKHS_Q_nHSKigzb', // [FILL IN] the public anon key (never the service_role key)
+      WHATSAPP_GROUP: 'https://chat.whatsapp.com/LAxpuVNdgb1JPXTAM5Mbo2?s=cl&p=a&mlu=4&ilr=4', // [FILL IN]
+      SOCIAL: { instagram: 'https://www.instagram.com/unibenjaycees/', twitter: 'https://x.com/jci_uniben?lang=en', linkedin: 'https://www.linkedin.com/company/jcin-uniben?originalSubdomain=ng' },            // [FILL IN] full profile URLs
+      LOCATIONS: { // [FILL IN] start/end like '2026-12-05T09:00:00+01:00'; leave '' until confirmed
+        Ugbowo: { venue: '', address: '', start: '', end: '' },
+        Ekenhuan: { venue: '', address: '', start: '', end: '' }
+      }
+    };
+    // =======================================================
+    const $ = s => document.querySelector(s), f = $('#f'), L = CONFIG.LOCATIONS, T = new Set(); let busy = false;
+    const PH = /YOUR_/.test(CONFIG.SUPABASE_URL + CONFIG.SUPABASE_ANON_KEY);
+    const sb = !PH && window.supabase ? window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY) : null;
+    if (PH) console.warn('HealthFest: Supabase keys not set. Preview mode: nothing is saved.');
+    const esc = s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
+    const when = l => l.start ? new Date(l.start).toLocaleString('en-NG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Date and time to be announced';
+    const where = l => [l.venue, l.address].filter(Boolean).join(', ') || 'Venue to be announced';
+    const evt = (n, l) => `<div class="evt" data-n="${n}"><b>${n}</b><span>${when(l)}</span><span>${esc(where(l))}</span></div>`;
+    $('#when').innerHTML = '<p class="label">Event details</p>' + Object.keys(L).map(n => evt(n, L[n])).join('');
+    const S = ['Blood pressure screening', 'Blood glucose screening', 'Body mass index (BMI) and weight assessment', 'Waist-to-hip ratio measurement', 'Malaria screening', 'HIV testing and counselling', 'Hepatitis screening', 'Blood group testing', 'Eye screening', 'Dental assessment and consultation', 'General medical consultation', 'Mental health education or consultation', 'Health education and preventive counselling', 'Blood donation', 'Sexual and reproductive health education', 'Other available services'];
+    $('#svc').innerHTML = S.map((s, i) => `<label class="svc"><input type="checkbox" name="services" value="${s}"><i class="tick"></i><span>${s}${i == 5 || i == 11 ? '<em class="conf">Confidential</em>' : ''}</span></label>`).join('');
+    $('#heard').innerHTML = '<option value="" disabled selected>Select an option</option>' + ['Instagram', 'Facebook', 'WhatsApp', 'TikTok', 'X / Twitter', 'Friend or colleague', 'JCI Nigeria UNIBEN', 'Campus publicity', 'Poster or flyer', 'Previous HealthFest', 'Other'].map(o => `<option>${o}</option>`).join('');
+    const IC = { instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>', twitter: '<path d="M4 4l16 16M20 4L4 20"/>', linkedin: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5m0 2c0-1.5 1-2 2-2s2 .5 2 2v3"/>' };
+    $('#soc').innerHTML = Object.keys(IC).map(k => `<a href="${CONFIG.SOCIAL[k]}" target="_blank" rel="noopener" aria-label="${k}"><svg viewBox="0 0 24 24">${IC[k]}</svg></a>`).join('');
+    const norm = v => { let s = v.replace(/[\s\-().]/g, ''); if (/^0\d{10}$/.test(s)) s = '+234' + s.slice(1); else if (/^234\d{10}$/.test(s)) s = '+' + s; return /^\+\d{10,15}$/.test(s) ? s : '' };
+    const val = k => { const e = f.elements[k]; if (k == 'services') return [...f.querySelectorAll('[name=services]:checked')].map(x => x.value); if (k == 'consent' || k == 'guardian') return e.checked; return e.value };
+    const age = () => { const a = Number(val('age')); return val('age').trim() !== '' && Number.isInteger(a) ? a : 0 };
+    const minor = () => age() >= 5 && age() < 18;
+    const V = {
+      fullname: v => (/\S+\s+\S+/.test(v.trim()) && v.trim().length >= 3) || 'Please enter your first and last name.',
+      age: v => { const n = Number(v); return (v.trim() !== '' && Number.isInteger(n) && n >= 5 && n <= 100) || 'Enter your age as a whole number between 5 and 100.' },
+      gender: v => !!v || 'Please choose an option.',
+      phone: v => !!norm(v) || 'Enter a valid number, like 08012345678 or +2348012345678.',
+      email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Enter a valid email address, like you@example.com.',
+      location: v => !!v || 'Please choose a location.',
+      attended: v => !!v || 'Please choose Yes or No.',
+      heard: v => !!v || 'Please tell us how you heard about HealthFest.',
+      services: v => v.length > 0 || 'Choose at least one service.',
+      consent: v => v === true || 'Please tick the box to give your consent.',
+      guardian: v => v === true || 'A parent or guardian must consent for participants under 18.'
+    };
+    const LAB = { fullname: 'your full name', age: 'your age', gender: 'your gender', phone: 'your phone number', email: 'your email', location: 'a location', attended: 'if you attended before', heard: 'how you heard about us', services: 'at least one service', consent: 'your consent', guardian: 'guardian consent' };
+    function render(all) {
+      let ok = 0, n = 0, next = '';
+      $('#minor').hidden = !minor();
+      for (const k in V) {
+        if (k == 'guardian' && !minor()) continue; n++; const r = V[k](val(k)), e = f.querySelector('.err[data-for="' + k + '"]');
+        if (r === true) ok++; else if (!next) next = LAB[k];
+        e.textContent = (all || T.has(k)) && r !== true ? r : ''; e.parentElement.classList.toggle('bad', !!e.textContent)
+      }
+      const c = val('services').length;
+      $('#bar').style.width = ok / n * 100 + '%';
+      $('#count').textContent = c + (c == 1 ? ' service selected' : ' services selected');
+      $('#hint').textContent = ok < n ? `${ok} of ${n} required items done. Next: ${next}.` : 'All set. You can submit your registration.';
+      $('#go').disabled = ok < n || busy; return ok == n
+    }
+    f.addEventListener('input', () => render());
+    f.addEventListener('focusout', e => { if (e.target.name) { T.add(e.target.name); render() } });
+    f.addEventListener('change', e => {
+      const k = e.target.name; if (!k) return; T.add(k);
+      if (k == 'location') { const c = $('#locCard'); c.hidden = false; c.innerHTML = evt(e.target.value, L[e.target.value]); document.querySelectorAll('#when .evt').forEach(x => x.classList.toggle('on', x.dataset.n == e.target.value)) }
+      render()
+    });
+    document.querySelectorAll('[data-all]').forEach(b => b.onclick = () => { document.querySelectorAll('[name=services]').forEach(c => c.checked = b.dataset.all == '1'); T.add('services'); render() });
+    function dl(l, n) {
+      const z = d => new Date(d).toISOString().replace(/[-:]|\.\d{3}/g, ''), s = new Date(l.start), e = l.end ? new Date(l.end) : new Date(+s + 108e5);
+      const t = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//JCI Nigeria UNIBEN//HealthFest 5.0//EN', 'BEGIN:VEVENT', 'UID:healthfest5-' + n.toLowerCase() + '@jcinuniben', 'DTSTAMP:' + z(Date.now()), 'DTSTART:' + z(s), 'DTEND:' + z(e), 'SUMMARY:HealthFest 5.0 (' + n + ')', 'LOCATION:' + where(l).replace(/,/g, '\\,'), 'DESCRIPTION:Organised by JCI Nigeria UNIBEN.', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], { type: 'text/calendar' })); a.download = 'healthfest-5-' + n.toLowerCase() + '.ics'; a.click()
+    }
+    function done(r) {
+      const l = L[r.location];
+      $('#card').innerHTML = `<div class="done"><div class="thanks"></div><p class="label">Registration received</p><h2>Thank you, ${esc(r.full_name.split(' ')[0])}!</h2><p class="sub">You're registered for HealthFest 5.0. We'll use your WhatsApp number and email to send updates.</p>${PH ? '<p class="alert">Preview mode: Supabase keys are not set, so this registration was not saved.</p>' : ''}<dl class="sum"><div><dt>Location</dt><dd>${r.location}</dd></div><div><dt>Date and time</dt><dd>${when(l)}</dd></div><div><dt>Venue</dt><dd>${esc(where(l))}</dd></div><div><dt>Services</dt><dd>${r.services.length} selected</dd></div></dl><div class="btns">${l.start ? '<button class="go alt" id="cal" type="button">Add to calendar</button>' : ''}<a class="go wa" href="${CONFIG.WHATSAPP_GROUP}" target="_blank" rel="noopener">Join the WhatsApp group</a></div></div>`;
+      const c = $('#cal'); if (c) c.onclick = () => dl(l, r.location); $('#card').scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    f.onsubmit = async e => {
+      e.preventDefault(); if (busy || !render(true)) return; busy = true; const g = $('#go'), fe = $('#ferr'); fe.hidden = true; g.disabled = true; g.innerHTML = '<i class="spin"></i>Submitting…';
+      const row = { full_name: val('fullname').trim().replace(/\s+/g, ' '), age: age(), gender: val('gender'), phone: norm(val('phone')), email: val('email').trim().toLowerCase(), location: val('location'), attended_before: val('attended') == 'Yes', heard_from: val('heard'), services: val('services'), consent: true, guardian_consent: minor() ? true : null };
+      try {
+        if (PH) await new Promise(r => setTimeout(r, 900)); else { if (!sb) throw new Error('Supabase library not loaded'); const { error } = await sb.from('healthfest_registrations').insert(row); if (error) throw error }
+        done(row)
+      } catch (err) {
+        const m = ((err && err.message) || '') + ((err && err.details) || '');
+        let msg = `We couldn't submit your registration. Please check your connection and try again.`;
+        if ((err && err.code == '23505') || /duplicate key/i.test(m)) msg = /email/i.test(m) ? `This email address is already registered. If that was you, you're all set.` : `This phone number is already registered. If that was you, you're all set.`;
+        fe.textContent = msg; fe.hidden = false; g.innerHTML = 'Submit Registration'
+      }
+      finally { busy = false; if ($('#go')) render() }
+    };
+    render();
+  </script>
+</body>
+
+</html>
