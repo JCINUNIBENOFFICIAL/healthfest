@@ -834,7 +834,10 @@
     const CONFIG = {
       SUPABASE_URL: 'https://eroogvrsmlfpcdmnvxsf.supabase.co',           // [FILL IN] e.g. https://abcd1234.supabase.co
       SUPABASE_ANON_KEY: 'sb_publishable_EwKWVrQlbM7EzmKVdKHS_Q_nHSKigzb', // [FILL IN] the public anon key (never the service_role key)
-      WHATSAPP_GROUP: 'https://chat.whatsapp.com/LAxpuVNdgb1JPXTAM5Mbo2?s=cl&p=a&mlu=4&ilr=4', // [FILL IN]
+      WHATSAPP_GROUPS: {
+        Ugbowo: 'https://chat.whatsapp.com/LAxpuVNdgb1JPXTAM5Mbo2?s=cl&p=a&mlu=4&ilr=4',
+        Ekenhuan: 'https://chat.whatsapp.com/JoA52NcI79jA90OqunirnU?s=cl&p=a&mlu=4&ilr=4'
+      },
       SOCIAL: { instagram: 'https://www.instagram.com/unibenjaycees/', twitter: 'https://x.com/jci_uniben?lang=en', linkedin: 'https://www.linkedin.com/company/jcin-uniben?originalSubdomain=ng' },            // [FILL IN] full profile URLs
       LOCATIONS: { // [FILL IN] start/end like '2026-12-05T09:00:00+01:00'; leave '' until confirmed
         Ugbowo: { venue: '', address: '', start: '', end: '' },
@@ -903,7 +906,7 @@
     }
     function done(r) {
       const l = L[r.location];
-      $('#card').innerHTML = `<div class="done"><div class="thanks"></div><p class="label">Registration received</p><h2>Thank you, ${esc(r.full_name.split(' ')[0])}!</h2><p class="sub">You're registered for HealthFest 5.0. We'll use your WhatsApp number and email to send updates.</p>${PH ? '<p class="alert">Preview mode: Supabase keys are not set, so this registration was not saved.</p>' : ''}<dl class="sum"><div><dt>Location</dt><dd>${r.location}</dd></div><div><dt>Date and time</dt><dd>${when(l)}</dd></div><div><dt>Venue</dt><dd>${esc(where(l))}</dd></div><div><dt>Services</dt><dd>${r.services.length} selected</dd></div></dl><div class="btns">${l.start ? '<button class="go alt" id="cal" type="button">Add to calendar</button>' : ''}<a class="go wa" href="${CONFIG.WHATSAPP_GROUP}" target="_blank" rel="noopener">Join the WhatsApp group</a></div></div>`;
+      $('#card').innerHTML = `<div class="done"><div class="thanks"></div><p class="label">Registration received</p><h2>Thank you, ${esc(r.full_name.split(' ')[0])}!</h2><p class="sub">You're registered for HealthFest 5.0. We'll use your WhatsApp number and email to send updates.</p>${PH ? '<p class="alert">Preview mode: Supabase keys are not set, so this registration was not saved.</p>' : ''}<dl class="sum"><div><dt>Location</dt><dd>${r.location}</dd></div><div><dt>Date and time</dt><dd>${when(l)}</dd></div><div><dt>Venue</dt><dd>${esc(where(l))}</dd></div><div><dt>Services</dt><dd>${r.services.length} selected</dd></div></dl><div class="btns">${l.start ? '<button class="go alt" id="cal" type="button">Add to calendar</button>' : ''}<a class="go wa" href="${CONFIG.WHATSAPP_GROUPS[r.location]}" target="_blank" rel="noopener">Join the WhatsApp group</a></div></div>`;
       const c = $('#cal'); if (c) c.onclick = () => dl(l, r.location); $('#card').scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
     f.onsubmit = async e => {
